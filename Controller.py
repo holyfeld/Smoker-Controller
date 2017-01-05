@@ -8,6 +8,7 @@
 
 import random
 import sqlite3
+import string
 from time import sleep
 import datetime
 #from flask import Flask
@@ -19,10 +20,11 @@ import sys
 #app = Flask(__name__)
 
 #
-# for now, hard code the table name, drop if it exists, and
+# may want to create an init function in the future? for now, hard code the table name, drop if it exists, and
 # create a clean table.
 #
 # and for good mechanics, throw in a try/except when we get real.
+# sqlite portions inspired by http://sebastianraschka.com/Articles/2014_sqlite_in_python_tutorial.html
 
 table_name = 'DataRecords'
 key_name = "DateTimeStamp"
