@@ -10,13 +10,13 @@ import random
 import sqlite3
 from time import sleep
 import datetime
-from flask import Flask
+#from flask import Flask
 import sys
 
 # may want to create an init function in the future?
 #
 # start with the web server
-app = Flask(__name__)
+#app = Flask(__name__)
 
 #
 # for now, hard code the table name, drop if it exists, and
