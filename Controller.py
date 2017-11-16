@@ -53,6 +53,13 @@ cur.execute("ALTER TABLE {tn} ADD COLUMN '{f1}' {ft1}" \
 
 # Some day, we'll create a control function. For now, we're just going to loop here until I get tired of pressing Y
 
+def generate_data_values():
+    tc_1_value = int(random.randrange(200, 250))
+    tc_2_value = int(random.randrange(200, 250))
+    tc_3_value = int(random.randrange(200, 250))
+    tc_4_value = int(random.randrange(200, 250))
+    return tc_1_value, tc_2_value, tc_3_value, tc_4_value
+
 def control_loop():
     answer = "n"
     count = 0
@@ -69,10 +76,8 @@ def control_loop():
             timestamp = datetime.datetime.now()
             str_timestamp = "'"+timestamp.strftime('%Y-%m-%d %H:%M:%S')+"'"
             print(str_timestamp)
-            tc_1_value = int(random.randrange(200, 250))
-            tc_2_value = int(random.randrange(200, 250))
-            tc_3_value = int(random.randrange(200, 250))
-            tc_4_value = int(random.randrange(200, 250))
+
+            tc_1_value, tc_2_value, tc_3_value, tc_4_value = generate_data_values()
 
             # now to stuff it in the smoke logging table
             try:
