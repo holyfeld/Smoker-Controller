@@ -36,20 +36,19 @@ tc_4_name = "Probe3"
 conn = sqlite3.connect('Data/SmokerData.db')
 cur = conn.cursor()
 
-# Make some fresh tables using execute()
-cur.execute('''DROP TABLE IF EXISTS {tn}'''.format(tn=table_name))
 
-cur.execute('''CREATE TABLE {tn} ({f0} {ft0} PRIMARY KEY)''' \
-            .format(tn=table_name, f0=key_name, ft0='TEXT'))
-
-cur.execute("ALTER TABLE {tn} ADD COLUMN '{f1}' {ft1}" \
-            .format(tn=table_name, f1=tc_1_name, ft1='INTEGER'))
-cur.execute("ALTER TABLE {tn} ADD COLUMN '{f1}' {ft1}" \
-            .format(tn=table_name, f1=tc_2_name, ft1='INTEGER'))
-cur.execute("ALTER TABLE {tn} ADD COLUMN '{f1}' {ft1}" \
-            .format(tn=table_name, f1=tc_3_name, ft1='INTEGER'))
-cur.execute("ALTER TABLE {tn} ADD COLUMN '{f1}' {ft1}" \
-            .format(tn=table_name, f1=tc_4_name, ft1='INTEGER'))
+def create_the_smoking_log_table():
+    cur.execute('''DROP TABLE IF EXISTS {tn}'''.format(tn=table_name))
+    cur.execute('''CREATE TABLE {tn} ({f0} {ft0} PRIMARY KEY)''' \
+                .format(tn=table_name, f0=key_name, ft0='TEXT'))
+    cur.execute("ALTER TABLE {tn} ADD COLUMN '{f1}' {ft1}" \
+                .format(tn=table_name, f1=tc_1_name, ft1='INTEGER'))
+    cur.execute("ALTER TABLE {tn} ADD COLUMN '{f1}' {ft1}" \
+                .format(tn=table_name, f1=tc_2_name, ft1='INTEGER'))
+    cur.execute("ALTER TABLE {tn} ADD COLUMN '{f1}' {ft1}" \
+                .format(tn=table_name, f1=tc_3_name, ft1='INTEGER'))
+    cur.execute("ALTER TABLE {tn} ADD COLUMN '{f1}' {ft1}" \
+                .format(tn=table_name, f1=tc_4_name, ft1='INTEGER'))
 
 
 def read_sensor_value():
@@ -106,6 +105,8 @@ def control_loop():
             answer = input('Ready to quit?: ')
 
 def main(argv):
+    # Make some fresh tables using execute()
+    create_the_smoking_log_table()
     control_loop()
 
 if __name__ == '__main__':
