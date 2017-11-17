@@ -64,6 +64,10 @@ def generate_data_values():
 
 # Some day, we'll create a control function. For now, we're just going to loop here until I get tired of pressing Y
 
+def format_now_timestamp():
+    timestamp = datetime.datetime.now()
+    return "'"+timestamp.strftime('%Y-%m-%d %H:%M:%S')+"'"
+
 def control_loop():
     answer = "n"
     count = 0
@@ -77,8 +81,8 @@ def control_loop():
             # reset the timer (count)
             count = 0
             # Time to insert a data record.
-            timestamp = datetime.datetime.now()
-            str_timestamp = "'"+timestamp.strftime('%Y-%m-%d %H:%M:%S')+"'"
+            # get a formatted time for inserting into the table
+            str_timestamp = format_now_timestamp()
             print(str_timestamp)
 
             tc_1_value, tc_2_value, tc_3_value, tc_4_value = generate_data_values()
