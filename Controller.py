@@ -62,6 +62,17 @@ def generate_data_values():
     tc_4_value = read_sensor_value()
     return tc_1_value, tc_2_value, tc_3_value, tc_4_value
 
+def stuff_it_in_the_smoke_logging_table(str_timestamp, tc_1_value, tc_2_value, tc_3_value, tc_4_value):
+    try:
+        cur.execute("INSERT OR IGNORE INTO {tn} ({kn}, {f1}, {f2}, {f3}, {f4}) VALUES ({dts}, {tc1_value}, \
+                    {tc2_value}, {tc3_value}, {tc4_value}) ". \
+                    format(tn=table_name, kn=key_name, dts=str_timestamp, f1=tc_1_name, tc1_value=tc_1_value,
+                           f2=tc_2_name, tc2_value=tc_2_value, f3=tc_3_name, tc3_value=tc_3_value, f4=tc_4_name,
+                           tc4_value=tc_4_value))
+    except sqlite3.Error as e:
+        print("An error occurred:", e.args[0])
+    conn.commit()
+
 # Some day, we'll create a control function. For now, we're just going to loop here until I get tired of pressing Y
 
 def format_now_timestamp():
@@ -88,20 +99,11 @@ def control_loop():
             tc_1_value, tc_2_value, tc_3_value, tc_4_value = generate_data_values()
 
             # now to stuff it in the smoke logging table
-            try:
-                cur.execute("INSERT OR IGNORE INTO {tn} ({kn}, {f1}, {f2}, {f3}, {f4}) VALUES ({dts}, {tc1_value}, \
-                    {tc2_value}, {tc3_value}, {tc4_value}) ". \
-                    format(tn=table_name, kn=key_name, dts=str_timestamp, f1=tc_1_name, tc1_value=tc_1_value,
-                    f2=tc_2_name, tc2_value=tc_2_value,f3=tc_3_name, tc3_value=tc_3_value,f4=tc_4_name, tc4_value=tc_4_value))
-            except sqlite3.Error as e:
-                print ("An error occurred:", e.args[0])
-
-            conn.commit()
+            stuff_it_in_the_smoke_logging_table(str_timestamp, tc_1_value, tc_2_value, tc_3_value, tc_4_value)
 
             # and now to do some control stuff ....
 
             answer = input('Ready to quit?: ')
-
 
 def main(argv):
     control_loop()
