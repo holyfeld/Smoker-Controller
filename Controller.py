@@ -51,14 +51,18 @@ cur.execute("ALTER TABLE {tn} ADD COLUMN '{f1}' {ft1}" \
 cur.execute("ALTER TABLE {tn} ADD COLUMN '{f1}' {ft1}" \
             .format(tn=table_name, f1=tc_4_name, ft1='INTEGER'))
 
-# Some day, we'll create a control function. For now, we're just going to loop here until I get tired of pressing Y
+
+def read_sensor_value():
+    return int(random.randrange(200, 250))
 
 def generate_data_values():
-    tc_1_value = int(random.randrange(200, 250))
-    tc_2_value = int(random.randrange(200, 250))
-    tc_3_value = int(random.randrange(200, 250))
-    tc_4_value = int(random.randrange(200, 250))
+    tc_1_value = read_sensor_value()
+    tc_2_value = read_sensor_value()
+    tc_3_value = read_sensor_value()
+    tc_4_value = read_sensor_value()
     return tc_1_value, tc_2_value, tc_3_value, tc_4_value
+
+# Some day, we'll create a control function. For now, we're just going to loop here until I get tired of pressing Y
 
 def control_loop():
     answer = "n"
