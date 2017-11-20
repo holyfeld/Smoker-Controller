@@ -4,6 +4,7 @@
 # version .5 getting started. Create the one second run forever loop, initially print the count, and every 60 counts
 # store some numbers in a SQL Lite table.
 #
+# sqlite portions inspired by http://sebastianraschka.com/Articles/2014_sqlite_in_python_tutorial.html
 # grab the imports
 
 import random
@@ -11,21 +12,11 @@ import sqlite3
 import string
 from time import sleep
 import datetime
-#from flask import Flask
 import sys
 
 # may want to create an init function in the future?
-#
-# start with the web server
-#app = Flask(__name__)
 
-#
-# may want to create an init function in the future? for now, hard code the table name, drop if it exists, and
-# create a clean table.
-#
-# and for good mechanics, throw in a try/except when we get real.
-# sqlite portions inspired by http://sebastianraschka.com/Articles/2014_sqlite_in_python_tutorial.html
-
+database_name = 'Data/SmokerData.db'
 table_name = 'DataRecords'
 key_name = "DateTimeStamp"
 tc_1_name = "ChamberTemp"
@@ -33,11 +24,16 @@ tc_2_name = "Probe1"
 tc_3_name = "Probe2"
 tc_4_name = "Probe3"
 
-conn = sqlite3.connect('Data/SmokerData.db')
-cur = conn.cursor()
+def connect_to_the_database(database):
+    conn = sqlite3.connect(database)
+    cur = conn.cursor()
+    return cur, conn
 
+def create_the_smoking_log_table(cur):
+# for now, hard code the table name, drop if it exists, and
+# create a clean table.
+# and for good mechanics, throw in a try/except when we get real.
 
-def create_the_smoking_log_table():
     cur.execute('''DROP TABLE IF EXISTS {tn}'''.format(tn=table_name))
     cur.execute('''CREATE TABLE {tn} ({f0} {ft0} PRIMARY KEY)''' \
                 .format(tn=table_name, f0=key_name, ft0='TEXT'))
@@ -61,7 +57,7 @@ def generate_data_values():
     tc_4_value = read_sensor_value()
     return tc_1_value, tc_2_value, tc_3_value, tc_4_value
 
-def stuff_it_in_the_smoke_logging_table(str_timestamp, tc_1_value, tc_2_value, tc_3_value, tc_4_value):
+def stuff_it_in_the_smoke_logging_table(conn, cur, str_timestamp, tc_1_value, tc_2_value, tc_3_value, tc_4_value):
     try:
         cur.execute("INSERT OR IGNORE INTO {tn} ({kn}, {f1}, {f2}, {f3}, {f4}) VALUES ({dts}, {tc1_value}, \
                     {tc2_value}, {tc3_value}, {tc4_value}) ". \
@@ -78,7 +74,7 @@ def format_now_timestamp():
     timestamp = datetime.datetime.now()
     return "'"+timestamp.strftime('%Y-%m-%d %H:%M:%S')+"'"
 
-def control_loop():
+def control_loop(conn, cur):
     answer = "n"
     count = 0
 
@@ -98,7 +94,8 @@ def control_loop():
             tc_1_value, tc_2_value, tc_3_value, tc_4_value = generate_data_values()
 
             # now to stuff it in the smoke logging table
-            stuff_it_in_the_smoke_logging_table(str_timestamp, tc_1_value, tc_2_value, tc_3_value, tc_4_value)
+            stuff_it_in_the_smoke_logging_table(conn, cur, str_timestamp, tc_1_value, tc_2_value, tc_3_value, tc_4_value)
+            stuff_it_in_the_smoke_logging_table(conn, cur, str_timestamp, tc_1_value, tc_2_value, tc_3_value, tc_4_value)
 
             # and now to do some control stuff ....
 
@@ -106,8 +103,9 @@ def control_loop():
 
 def main(argv):
     # Make some fresh tables using execute()
-    create_the_smoking_log_table()
-    control_loop()
+    cur, conn = connect_to_the_database(database_name)
+    create_the_smoking_log_table(cur)
+    control_loop(conn, cur)
 
 if __name__ == '__main__':
     main(sys.argv)
