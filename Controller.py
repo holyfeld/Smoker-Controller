@@ -58,8 +58,9 @@ def generate_data_values():
     return tc_1_value, tc_2_value, tc_3_value, tc_4_value
 
 def stuff_it_in_the_smoke_logging_table(conn, cur, str_timestamp, tc_1_value, tc_2_value, tc_3_value, tc_4_value):
+    #hey don, you might want to include OR IGNORE in the insert statement some day.
     try:
-        cur.execute("INSERT OR IGNORE INTO {tn} ({kn}, {f1}, {f2}, {f3}, {f4}) VALUES ({dts}, {tc1_value}, \
+        cur.execute("INSERT INTO {tn} ({kn}, {f1}, {f2}, {f3}, {f4}) VALUES ({dts}, {tc1_value}, \
                     {tc2_value}, {tc3_value}, {tc4_value}) ". \
                     format(tn=table_name, kn=key_name, dts=str_timestamp, f1=tc_1_name, tc1_value=tc_1_value,
                            f2=tc_2_name, tc2_value=tc_2_value, f3=tc_3_name, tc3_value=tc_3_value, f4=tc_4_name,
@@ -94,7 +95,6 @@ def control_loop(conn, cur):
             tc_1_value, tc_2_value, tc_3_value, tc_4_value = generate_data_values()
 
             # now to stuff it in the smoke logging table
-            stuff_it_in_the_smoke_logging_table(conn, cur, str_timestamp, tc_1_value, tc_2_value, tc_3_value, tc_4_value)
             stuff_it_in_the_smoke_logging_table(conn, cur, str_timestamp, tc_1_value, tc_2_value, tc_3_value, tc_4_value)
 
             # and now to do some control stuff ....
