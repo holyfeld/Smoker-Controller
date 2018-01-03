@@ -13,6 +13,7 @@ import string
 from time import sleep
 import datetime
 import sys
+import tkinter as tk
 
 # may want to create an init function in the future?
 
@@ -75,11 +76,11 @@ def format_now_timestamp():
     timestamp = datetime.datetime.now()
     return "'"+timestamp.strftime('%Y-%m-%d %H:%M:%S')+"'"
 
-def control_loop(conn, cur):
-    answer = "n"
+def control_loop(conn, cur, exit_app):
+
     count = 0
 
-    while answer != "Y":
+    while exit_app != "Y":
         count += 1
         print(count)
         sleep(1)    #sleep for a second
@@ -99,13 +100,30 @@ def control_loop(conn, cur):
 
             # and now to do some control stuff ....
 
-            answer = input('Ready to quit?: ')
+            exit_app = input('Ready to quit?: ')
 
 def main(argv):
     # Make some fresh tables using execute()
     cur, conn = connect_to_the_database(database_name)
     create_the_smoking_log_table(cur)
-    control_loop(conn, cur)
+    exit_app = 'N'
+    control_loop(conn, cur, exit_app)
 
 if __name__ == '__main__':
     main(sys.argv)
+
+# can we exit the program when the user says to?
+# can we display data?
+# can we acquire data?
+# manual: how accurate is the data?
+# nothing to do (already covered by Don's smoking practice): how to notice when sensors lose accuracy?
+# can we record data?
+# can we avoid overwriting previous data?
+# can we continue acquiring (and displaying) data even if we can't record it?
+# can we display the data in a GUI?
+# can we enter values for thermocouple names via GUI?
+# can we perform some very simplistic control function based on the data?
+# can we enter (via GUI) needed inputs for intended control function?
+# can we perform the intended control function?
+# can we switch (via GUI) from automatic control to manual?
+# can we switch (via GUI) from manual control to automatic?
