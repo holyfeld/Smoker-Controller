@@ -25,6 +25,9 @@ tc_2_name = "Probe1"
 tc_3_name = "Probe2"
 tc_4_name = "Probe3"
 
+
+exit_app = 'N'
+
 def connect_to_the_database(database):
     conn = sqlite3.connect(database)
     cur = conn.cursor()
@@ -70,44 +73,48 @@ def stuff_it_in_the_smoke_logging_table(conn, cur, str_timestamp, tc_1_value, tc
         print("An error occurred:", e.args[0])
     conn.commit()
 
-# Some day, we'll create a control function. For now, we're just going to loop here until I get tired of pressing Y
-
 def format_now_timestamp():
     timestamp = datetime.datetime.now()
     return "'"+timestamp.strftime('%Y-%m-%d %H:%M:%S')+"'"
 
-def control_loop(conn, cur, exit_app):
+def set_exit(self):
+    exit_app = 'Y'
 
-    count = 0
+class App():
 
-    while exit_app != "Y":
-        count += 1
-        print(count)
-        sleep(1)    #sleep for a second
-        if count == 10:
-            # it's a minute later. (someday)
-            # reset the timer (count)
-            count = 0
-            # Time to insert a data record.
-            # get a formatted time for inserting into the table
-            str_timestamp = format_now_timestamp()
-            print(str_timestamp)
 
-            tc_1_value, tc_2_value, tc_3_value, tc_4_value = generate_data_values()
+    def __init__(self):
 
-            # now to stuff it in the smoke logging table
-            stuff_it_in_the_smoke_logging_table(conn, cur, str_timestamp, tc_1_value, tc_2_value, tc_3_value, tc_4_value)
+        #set up some database stuff
+        # Make some fresh tables using execute()
+        global cur, conn
+        cur, conn = connect_to_the_database(database_name)
+        create_the_smoking_log_table(cur)
 
-            # and now to do some control stuff ....
+        # build a window with a pushbutton
+        self.root = tk.Tk()
+        self.exit_button = tk.Button(self.root, text="Push me to exit the program", command=set_exit(self))
+        self.exit_button.pack()
+        self.control_loop()
+        self.root.mainloop()
 
-            exit_app = input('Ready to quit?: ')
+    def control_loop(self):
+
+        str_timestamp = format_now_timestamp()
+        print(str_timestamp)
+
+        tc_1_value, tc_2_value, tc_3_value, tc_4_value = generate_data_values()
+
+        # now to stuff it in the smoke logging table
+        stuff_it_in_the_smoke_logging_table(conn, cur, str_timestamp, tc_1_value, tc_2_value, tc_3_value,
+                                                tc_4_value)
+
+        # and now to do some control stuff ....
+
+        self.root.after(1000,self.control_loop) # do it again real soon now
 
 def main(argv):
-    # Make some fresh tables using execute()
-    cur, conn = connect_to_the_database(database_name)
-    create_the_smoking_log_table(cur)
-    exit_app = 'N'
-    control_loop(conn, cur, exit_app)
+    app = App()
 
 if __name__ == '__main__':
     main(sys.argv)
