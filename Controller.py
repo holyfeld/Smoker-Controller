@@ -111,7 +111,7 @@ class App():
 
         # and now to do some control stuff ....
 
-        self.root.after(1000,self.control_loop) # do it again real soon now
+        self.root.after(60000,self.control_loop) # insert a data record once a minute
 
 def main(argv):
     app = App()
