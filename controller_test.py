@@ -1,5 +1,3 @@
-# can we load the controller module?
-# can we exit the program when the user says to?
 # can we display data?
 # can we acquire data?
 # manual: how accurate is the data?
@@ -23,13 +21,22 @@ class Controller():
     def exit(self):
         return(0)
 
+    def display_data(self):
+        return("12:12:12, 1, 2, 3, 4")
+
 class ControllerTest(unittest.TestCase):
     def test_exiting(self):
         instance = Controller()
         return_value = instance.exit()
         self.assertEqual(0, return_value) # is this the right order for a good red-test error message?
         # subprocess.check_call(["ls", "-l", "schmonz"])
-        self.fail("next idea was: extract Controller to separate program, run, check happy and unhappy exit paths")
+#        self.fail("next idea was: extract Controller to separate program, run, check happy and unhappy exit paths")
+
+    def test_display_data(self):
+        # garbage time. Do we need to destroy the objects we create?
+        instance = Controller()
+        return_value = instance.display_data()
+        self.assertEqual("12:12:12, 1, 2, 3, 4", return_value)
 
 if __name__ == '__main__':
     unittest.main()
