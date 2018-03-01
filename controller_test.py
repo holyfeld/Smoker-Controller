@@ -14,15 +14,9 @@
 # can we switch (via GUI) from manual control to automatic?
 
 import unittest
-import subprocess
-# import controller
 
-class Controller():
-    def exit(self):
-        return(0)
+from controller import Controller
 
-    def display_data(self):
-        return("12:12:12, 1, 2, 3, 4")
 
 class ControllerTest(unittest.TestCase):
     def test_exiting(self):
@@ -35,7 +29,7 @@ class ControllerTest(unittest.TestCase):
     def test_display_data(self):
         # garbage time. Do we need to destroy the objects we create?
         instance = Controller()
-        return_value = instance.display_data()
+        return_value = instance.format_data()
         self.assertEqual("12:12:12, 1, 2, 3, 4", return_value)
 
 if __name__ == '__main__':
