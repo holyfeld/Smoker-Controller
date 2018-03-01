@@ -26,7 +26,7 @@ class Controller():
 class ControllerTest(unittest.TestCase):
     def test_exiting(self):
         instance = Controller()
-        return_value = nstance.exit()
+        return_value = instance.exit()
         self.assertEqual(0, return_value) # is this the right order for a good red-test error message?
         # subprocess.check_call(["ls", "-l", "schmonz"])
         self.fail("next idea was: extract Controller to separate program, run, check happy and unhappy exit paths")
