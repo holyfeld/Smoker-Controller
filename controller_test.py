@@ -1,4 +1,3 @@
-# can we display data?
 # can we acquire data?
 # manual: how accurate is the data?
 # nothing to do (already covered by Don's smoking practice): how to notice when sensors lose accuracy?
@@ -22,15 +21,19 @@ class ControllerTest(unittest.TestCase):
     def test_exiting(self):
         instance = Controller()
         return_value = instance.exit()
-        self.assertEqual(0, return_value) # is this the right order for a good red-test error message?
-        # subprocess.check_call(["ls", "-l", "schmonz"])
-#        self.fail("next idea was: extract Controller to separate program, run, check happy and unhappy exit paths")
+        self.assertEqual(0, return_value)
 
     def test_display_data(self):
-        # garbage time. Do we need to destroy the objects we create?
         instance = Controller()
         return_value = instance.format_data()
         self.assertEqual("12:12:12, 1, 2, 3, 4", return_value)
+
+#    def next_test_goes_here(self):
+        # add a sensor
+        # instance = Controller()
+        # temperature = instance.get_sensor_value()
+        # test do we get a number back
+        # test is it a reasonable number? Not too low, not too high, just right!
 
 if __name__ == '__main__':
     unittest.main()
