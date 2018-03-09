@@ -17,23 +17,37 @@ import unittest
 from controller import Controller
 
 
+def is_number(stringy_thingy):
+    try:
+        float(stringy_thingy)
+        return True
+    except ValueError:
+        return False
+
+
 class ControllerTest(unittest.TestCase):
     def test_exiting(self):
         instance = Controller()
         return_value = instance.exit()
-        self.assertEqual(0, return_value)
+        self.assertEqual(return_value,0)
 
     def test_display_data(self):
         instance = Controller()
         return_value = instance.format_data()
-        self.assertEqual("12:12:12, 1, 2, 3, 4", return_value)
+        self.assertEqual(return_value, "12:12:12, 1, 2, 3, 4")
 
-#    def next_test_goes_here(self):
-        # add a sensor
-        # instance = Controller()
-        # temperature = instance.get_sensor_value()
-        # test do we get a number back
-        # test is it a reasonable number? Not too low, not too high, just right!
+    def test_does_sensor_send_value(self):
+        instance = Controller()
+        temperature = instance.get_sensor_value()
+        self.assertIsNotNone(temperature)
+
+    def test_is_sensor_value_valid(self):
+        instance = Controller()
+        temperature = instance.get_sensor_value()
+        self.assertTrue(is_number(temperature))
+        self.assertGreaterEqual(temperature,-250.0)
+        self.assertLessEqual(temperature,1000)
+
 
 if __name__ == '__main__':
     unittest.main()
