@@ -1,7 +1,13 @@
-# can we acquire data?
+# Start here next time
+# can we record data?
+#   1. defer writing until later.
+#   2. write test, invent a method for inserting data
+#   3. build data structure probably an array of dictionary
+#   4.
+# can we acquire data from real source?
 # manual: how accurate is the data?
 # nothing to do (already covered by Don's smoking practice): how to notice when sensors lose accuracy?
-# can we record data?
+# can we record data to somewhere persistant?
 # can we avoid overwriting previous data?
 # can we continue acquiring (and displaying) data even if we can't record it?
 # can we display the data in a GUI?
