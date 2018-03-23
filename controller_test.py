@@ -26,6 +26,11 @@ def is_number(stringy_thingy):
 
 
 class ControllerTest(unittest.TestCase):
+    def assert_sensor_value_is_valid(self, sensor_value):
+        self.assertTrue(is_number(sensor_value))
+        self.assertGreaterEqual(sensor_value, -250.0)
+        self.assertLessEqual(sensor_value, 1000)
+
     def test_exiting(self):
         instance = Controller()
         return_value = instance.exit()
@@ -36,17 +41,22 @@ class ControllerTest(unittest.TestCase):
         return_value = instance.format_data()
         self.assertEqual(return_value, "12:12:12, 1, 2, 3, 4")
 
-    def test_does_sensor_send_value(self):
+    def test_does_sensor_send_values(self):
         instance = Controller()
-        temperature = instance.get_sensor_value()
-        self.assertIsNotNone(temperature)
+        tc1, tc2, tc3, tc4 = instance.get_sensor_values()
+        self.assertIsNotNone(tc1)
+        self.assertIsNotNone(tc2)
+        self.assertIsNotNone(tc3)
+        self.assertIsNotNone(tc4)
 
     def test_is_sensor_value_valid(self):
         instance = Controller()
-        temperature = instance.get_sensor_value()
-        self.assertTrue(is_number(temperature))
-        self.assertGreaterEqual(temperature,-250.0)
-        self.assertLessEqual(temperature,1000)
+        tc1, tc2, tc3, tc4 = instance.get_sensor_values()
+        self.assert_sensor_value_is_valid(tc1)
+        self.assert_sensor_value_is_valid(tc2)
+        self.assert_sensor_value_is_valid(tc3)
+        self.assert_sensor_value_is_valid(tc4)
+
 
 
 if __name__ == '__main__':

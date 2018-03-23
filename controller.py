@@ -11,8 +11,8 @@ class Controller():
         str_value = self.format_data()
         print (str_value)
 
-    def get_sensor_value(self):
-        return 79
+    def get_sensor_values(self):
+        return 79,80,81,82
 
 
 def main(argv):
