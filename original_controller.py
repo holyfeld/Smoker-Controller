@@ -14,6 +14,7 @@ from time import sleep
 import datetime
 import sys
 import tkinter as tk
+import u3
 
 # may want to create an init function in the future?
 

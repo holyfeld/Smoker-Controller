@@ -65,15 +65,10 @@ class ControllerTest(unittest.TestCase):
 
     def test_applesauce(self):
         instance = Controller()
-        records = [
-            ["12:12:12", 1, 2, 3, 4],
-            ["01:23:45", 5, 6, 7, 8]
-        ]
-        instance.record_more_data(records)
+        instance.record_more_data(["12:12:12", 1, 2, 3, 4])
+        self.assertEqual(instance.format_data(), "12:12:12, 1, 2, 3, 4\n")
+        instance.record_more_data(["01:23:45", 5, 6, 7, 8])
         self.assertEqual(instance.format_data(), "12:12:12, 1, 2, 3, 4\n01:23:45, 5, 6, 7, 8\n")
-
-
-
 
 
 if __name__ == '__main__':

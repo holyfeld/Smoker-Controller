@@ -2,16 +2,16 @@ import sys
 
 class Controller():
 
-    has_called_record_yet = False
+    recorded_data = []
 
     def exit(self):
         return(0)
 
     def format_data(self):
-        if (self.has_called_record_yet):
-            return("12:12:12, 1, 2, 3, 4\n01:23:45, 5, 6, 7, 8\n")
-        else:
-            return("12:12:12, 1, 2, 3, 4")
+        formatted_data = ''
+        for each in self.recorded_data:
+            formatted_data += "{}, {}, {}, {}, {}".format(each[0], each[1], each[2], each[3], each[4]) + "\n"
+        return(formatted_data)
 
     def display_data(self):
         str_value = self.format_data()
@@ -21,7 +21,7 @@ class Controller():
         return 79,80,81,82
 
     def record_more_data(self, data_to_be_recorded):
-        self.has_called_record_yet = True
+        self.recorded_data.append(data_to_be_recorded)
 
 
 def main(argv):
