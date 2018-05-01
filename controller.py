@@ -26,6 +26,7 @@ class Controller():
 
 def main(argv):
     controller = Controller()
+    controller.record_more_data(["12:12:12", 1, 2, 3, 4])
     controller.display_data()
 
 
