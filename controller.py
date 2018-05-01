@@ -1,8 +1,8 @@
 import sys
 
 class Controller():
-
-    recorded_data = []
+    def __init__(self):
+        self.recorded_data = []
 
     def exit(self):
         return(0)

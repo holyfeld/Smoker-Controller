@@ -42,10 +42,10 @@ class ControllerTest(unittest.TestCase):
         return_value = instance.exit()
         self.assertEqual(return_value,0)
 
-    def test_display_data(self):
+    def test_record_and_display_some_data(self):
         instance = Controller()
-        return_value = instance.format_data()
-        self.assertEqual(return_value, "12:12:12, 1, 2, 3, 4")
+        instance.record_more_data(["12:12:12", 1, 2, 3, 4])
+        self.assertEqual(instance.format_data(), "12:12:12, 1, 2, 3, 4\n")
 
     def test_does_sensor_send_values(self):
         instance = Controller()
@@ -63,7 +63,7 @@ class ControllerTest(unittest.TestCase):
         self.assert_sensor_value_is_valid(tc3)
         self.assert_sensor_value_is_valid(tc4)
 
-    def test_applesauce(self):
+    def test_record_more_data(self):
         instance = Controller()
         instance.record_more_data(["12:12:12", 1, 2, 3, 4])
         self.assertEqual(instance.format_data(), "12:12:12, 1, 2, 3, 4\n")
