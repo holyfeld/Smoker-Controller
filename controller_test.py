@@ -63,6 +63,17 @@ class ControllerTest(unittest.TestCase):
         self.assert_sensor_value_is_valid(tc3)
         self.assert_sensor_value_is_valid(tc4)
 
+    def test_applesauce(self):
+        instance = Controller()
+        records = [
+            ["12:12:12", 1, 2, 3, 4],
+            ["01:23:45", 5, 6, 7, 8]
+        ]
+        instance.record_more_data(records)
+        self.assertEqual(instance.format_data(), "12:12:12, 1, 2, 3, 4\n01:23:45, 5, 6, 7, 8\n")
+
+
+
 
 
 if __name__ == '__main__':
