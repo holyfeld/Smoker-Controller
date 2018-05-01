@@ -77,11 +77,7 @@ def format_now_timestamp():
     timestamp = datetime.datetime.now()
     return "'"+timestamp.strftime('%Y-%m-%d %H:%M:%S')+"'"
 
-def set_exit(self):
-    exit_app = 'Y'
-
 class App():
-
 
     def __init__(self):
 
@@ -91,10 +87,8 @@ class App():
         cur, conn = connect_to_the_database(database_name)
         create_the_smoking_log_table(cur)
 
-        # build a window with a pushbutton
+        # build a window
         self.root = tk.Tk()
-        self.exit_button = tk.Button(self.root, text="Push me to exit the program", command=set_exit(self))
-        self.exit_button.pack()
         self.control_loop()
         self.root.mainloop()
 
@@ -112,6 +106,7 @@ class App():
         # and now to do some control stuff ....
 
         self.root.after(60000,self.control_loop) # insert a data record once a minute
+
 
 def main(argv):
     app = App()
