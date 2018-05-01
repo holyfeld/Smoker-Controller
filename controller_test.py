@@ -47,6 +47,13 @@ class ControllerTest(unittest.TestCase):
         instance.record_more_data(["12:12:12", 1, 2, 3, 4])
         self.assertEqual(instance.format_data(), "12:12:12, 1, 2, 3, 4\n")
 
+    def test_record_and_display_more_data(self):
+        instance = Controller()
+        instance.record_more_data(["12:12:12", 1, 2, 3, 4])
+        self.assertEqual(instance.format_data(), "12:12:12, 1, 2, 3, 4\n")
+        instance.record_more_data(["01:23:45", 5, 6, 7, 8])
+        self.assertEqual(instance.format_data(), "12:12:12, 1, 2, 3, 4\n01:23:45, 5, 6, 7, 8\n")
+
     def test_does_sensor_send_values(self):
         instance = Controller()
         tc1, tc2, tc3, tc4 = instance.get_sensor_values()
@@ -62,13 +69,6 @@ class ControllerTest(unittest.TestCase):
         self.assert_sensor_value_is_valid(tc2)
         self.assert_sensor_value_is_valid(tc3)
         self.assert_sensor_value_is_valid(tc4)
-
-    def test_record_more_data(self):
-        instance = Controller()
-        instance.record_more_data(["12:12:12", 1, 2, 3, 4])
-        self.assertEqual(instance.format_data(), "12:12:12, 1, 2, 3, 4\n")
-        instance.record_more_data(["01:23:45", 5, 6, 7, 8])
-        self.assertEqual(instance.format_data(), "12:12:12, 1, 2, 3, 4\n01:23:45, 5, 6, 7, 8\n")
 
 
 if __name__ == '__main__':
