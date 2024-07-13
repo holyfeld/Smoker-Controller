@@ -1,5 +1,27 @@
 Smoker Controller
 
+update 2024-07-13
+
+“If you wait by the river long enough, the bodies of your enemies will float by.”
+― Sun Tzu 
+
+paraphrasing for this project ...
+
+If you wait long enough, someone will solve the problem better than you might have. - Old Cranky Guy
+
+tl;dr
+
+Started looking around and found https://nebhead.github.io/PiFire/ 
+Got to be honest. This project has more stuff in it than I might have done.
+And it's got great documentaton and an active user base. 
+
+I still want to improve my smoker control and data gathering. The Traeger controller is more complex than what the MES40 needs.
+
+Does it make sense to update this project? Possibly. I'll need a different control output device. And as we used to say in the '80s.
+If you have data in two places in the database, it's wrong in at least one of them.
+
+More as I move along.
+
 Rev 0.5 220116-12-11 list the parts explain the thinking
 
 Background - Rev 0.5
